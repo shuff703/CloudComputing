@@ -7,12 +7,7 @@ public class Agrawal {
 	
 	public static void main(String [] args){
 		
-		Node node1 = new Node("a1");
-		Node node2 = new Node("a1");
-		System.out.println(node1.hashCode());
-		System.out.println(node2.hashCode());
-		
-		/*Scanner fr = null;
+		Scanner fr = null;
 		try {
 			fr = new Scanner(new File("input.txt"));
 		} catch (FileNotFoundException e) {
@@ -26,13 +21,13 @@ public class Agrawal {
 			
 			input[i] = fr.nextLine();
 			
-		}*/
+		}
 		
 	}
 	
 	private void apriori(int minSupport, float confidence, String[] input){
 		
-		ArrayList<Node> nodes = new ArrayList<>();
+		HashMap<String, Integer> nodes = new HashMap<>();
 		
 		for(int i = 0; i<input.length; i++){
 			
@@ -41,8 +36,25 @@ public class Agrawal {
 			
 			for(int x = 0; x<items.length; x++){
 				
-				if(nodes.contains)
+				if(nodes.get(items[x]) == null){
+					nodes.put(items[x], 1);
+				}
+				else{
+					nodes.replace(items[x], nodes.get(items[x])+1);
+				}
+			}
+			
+		}
+		
+		for(String key : nodes.keySet()){
+			
+			if(nodes.get(key) < minSupport){	
+				nodes.remove(key);
 			}
 		}
+		
+		
+		
+		
 	}
 }
