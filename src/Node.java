@@ -1,14 +1,31 @@
 
 public class Node {
 	
-	private String id;
+	private String key;
 	private int support;
 	
-	public Node(String id, int support){
+	public Node(String key){
 		
-		this.id = id;
-		this.support = support;
+		this.key = key;
+		this.support = 1;
+		
+	}
+	
+	public void incSupport(){
+		
+		this.support++;
+		
+	}
+	
+	public String getKey(){
+		
+		return this.key;
 		
 	}
 
+	public boolean equals(String key){
+		
+		return this.key == key;
+		
+	}
 }
