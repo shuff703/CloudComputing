@@ -20,7 +20,6 @@ public class PatternMapper
         for (int i = 0; i < (1<<values.length); i++){
             StringBuilder sb = new StringBuilder();
  
-            // Print current subset
             for (int j = 0; j < values.length; j++){
  
                 if ((i & (1 << j)) > 0){
