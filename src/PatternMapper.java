@@ -32,6 +32,7 @@ public class PatternMapper
         for(String set: subsets){
         	
         	context.write(new Text(set), new IntWritable(1));
+        	
         }
 
 	}
