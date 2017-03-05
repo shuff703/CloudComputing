@@ -13,7 +13,7 @@ public class PatternMapper
 	public void map(LongWritable key, Text value, Context context) 
 			throws IOException, InterruptedException{
 		String line = value.toString();
-		line.replaceAll("([()\t])", "");
+		line.replaceAll("([/(/)\t])", "");
 		ArrayList<String> subsets = new ArrayList<>();
 		String [] values = line.split(",");
 		
