@@ -25,29 +25,24 @@ public class Agrawal {
 		
 		Configuration conf = new Configuration();
 		conf.set("minSupport", args[2]);
-		conf.setBoolean("jobComplete", false);
-		conf.setInt("iteration", 0);
-		
-		Job job = null;
-		
-		//while(conf.getBoolean("jobComplete", true) == false){
+		//conf.setBoolean("jobComplete", false);
+		//conf.setInt("iteration", 0);
 			
-			conf.setInt("iteration", Integer.parseInt(conf.get("iteration") + 1));
+		//conf.setInt("iteration", Integer.parseInt(conf.get("iteration") + 1));
 
-			job = new Job(conf);
-			job.setJarByClass(Agrawal.class);
-			job.setJobName("Subsets and support");
-			
-			FileInputFormat.addInputPath(job, new Path(args[0]));
-			FileOutputFormat.setOutputPath(job, new Path("intermediate.txt"));
-			
-			job.setMapperClass(PatternMapper.class);
-			job.setReducerClass(PatternReducer.class);
-			
-			job.setOutputKeyClass(Text.class);
-			job.setOutputValueClass(IntWritable.class);
-			
-		//}
+		Job job = new Job(conf);
+		job.setJarByClass(Agrawal.class);
+		job.setJobName("Subsets and support");
+		
+		FileInputFormat.addInputPath(job, new Path(args[0]));
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+		
+		job.setMapperClass(PatternMapper.class);
+		job.setReducerClass(PatternReducer.class);
+		
+		job.setOutputKeyClass(Text.class);
+		job.setOutputValueClass(IntWritable.class);
+		
 			
 		System.exit(job.waitForCompletion(true) ? 0:1);
 		

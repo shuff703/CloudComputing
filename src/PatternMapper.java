@@ -13,7 +13,6 @@ public class PatternMapper
 	public void map(LongWritable key, Text value, Context context) 
 			throws IOException, InterruptedException{
 		String line = value.toString();
-		line.replaceAll("([/(/)\t])", "");
 		ArrayList<String> subsets = new ArrayList<>();
 		String [] values = line.split(",");
 		
@@ -25,8 +24,8 @@ public class PatternMapper
                 if ((i & (1 << j)) > 0){
                 	sb.append(values[j]+",");
                 }
-            subsets.add(sb.toString());
             }
+            subsets.add(sb.toString());
         }
         
         for(String set: subsets){
