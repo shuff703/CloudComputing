@@ -30,7 +30,7 @@ public class Agrawal {
 		
 		Job job = null;
 		
-		while(conf.getBoolean("jobComplete", true) == false){
+		//while(conf.getBoolean("jobComplete", true) == false){
 			
 			conf.setInt("iteration", Integer.parseInt(conf.get("iteration") + 1));
 
@@ -47,8 +47,8 @@ public class Agrawal {
 			job.setOutputKeyClass(Text.class);
 			job.setOutputValueClass(IntWritable.class);
 			
-		}
-		
+		//}
+			
 		System.exit(job.waitForCompletion(true) ? 0:1);
 		
 	}
