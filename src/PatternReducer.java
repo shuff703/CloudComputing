@@ -26,7 +26,6 @@ public class PatternReducer
 			
 		}
 		
-		//Returns string out of bounds error working on fix
 		if(sum >= minSupport){
 			context.write(key, new DoubleWritable(sum/total));
 			StringBuilder sb = new StringBuilder(conf.get("itemSets"));

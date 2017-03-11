@@ -5,7 +5,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class AssociationReducer 
 	extends Reducer<Text, DoubleWritable, Text, DoubleWritable>{
@@ -38,6 +37,7 @@ public class AssociationReducer
 	            			implies.append(item);
 	            		}
 	            	}
+	            	//returns string out of bounds exception working on fix
 	            	double givenSupport = Double.parseDouble(itemSets.substring(itemSets.indexOf(given.toString())
 	            			,itemSets.indexOf(",", itemSets.indexOf(given.toString())+1)));
 	            	context.write(new Text(given.toString()+"->"+implies.toString()), new DoubleWritable(intersectSupport/givenSupport));
