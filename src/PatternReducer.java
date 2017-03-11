@@ -1,32 +1,37 @@
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
 
 public class PatternReducer 
-	extends Reducer<Text, IntWritable, Text, IntWritable>{
+	extends Reducer<Text, DoubleWritable, Text, DoubleWritable>{
 	
 	@Override
-	public void reduce(Text key, Iterable<IntWritable> values, Context context) 
+	public void reduce(Text key, Iterable<DoubleWritable> values, Context context) 
 			throws IOException, InterruptedException{
 		
 		Configuration conf = context.getConfiguration();
 		
 		int minSupport = Integer.parseInt(conf.get("minSupport"));
 		
-		int sum = 0;
+		double sum = 0;
+		double total = conf.getDouble("totalTransactions", -1);
 		
-		for(IntWritable num: values){
+		for(DoubleWritable num: values){
 			
 			sum += num.get();
 			
 		}
 		
+		//Returns string out of bounds error working on fix
 		if(sum >= minSupport){
-			context.write(key, new IntWritable(sum));
+			context.write(key, new DoubleWritable(sum/total));
+			StringBuilder sb = new StringBuilder(conf.get("itemSets"));
+			sb.append(key+":"+sum+",");
+			conf.set("itemSets", sb.toString());
 		}
 	}
 

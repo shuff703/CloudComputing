@@ -5,8 +5,11 @@
  * */
 
 import java.io.IOException;
+import java.util.HashMap;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -25,10 +28,8 @@ public class Agrawal {
 		
 		Configuration conf = new Configuration();
 		conf.set("minSupport", args[2]);
-		//conf.setBoolean("jobComplete", false);
-		//conf.setInt("iteration", 0);
-			
-		//conf.setInt("iteration", Integer.parseInt(conf.get("iteration") + 1));
+		conf.set("itemSets", ",");
+		conf.setDouble("totalTransactions", 0);
 
 		Job job = new Job(conf);
 		job.setJarByClass(Agrawal.class);
@@ -38,10 +39,11 @@ public class Agrawal {
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		
 		job.setMapperClass(PatternMapper.class);
-		job.setReducerClass(PatternReducer.class);
+		job.setCombinerClass(PatternReducer.class);
+		job.setReducerClass(AssociationReducer.class);
 		
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(IntWritable.class);
+		job.setOutputValueClass(DoubleWritable.class);
 		
 			
 		System.exit(job.waitForCompletion(true) ? 0:1);
